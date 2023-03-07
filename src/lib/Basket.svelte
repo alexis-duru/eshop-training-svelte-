@@ -111,30 +111,29 @@
             </li>
           {/each}
         </ul>
-
-        <div class="cart-total-container">
-          <span />
-          <span />
-          <div class="total-price-container">
-            <p class="total-price">
-              Total articles : {$cart.reduce(
-                (acc, items) => acc + items.quantity,
-                0
-              )}
-            </p>
-            <p class="total-price">
-              Prix total : {Math.round(
-                $cart.reduce(
-                  (acc, items) => acc + items.price * items.quantity,
-                  0
-                ) * 100
-              ) / 100}{" "}
-              €
-            </p>
-          </div>
-          <button on:click={validateCart}>Valider le panier</button>
-        </div>
       {/if}
+      <div class="cart-total-container">
+        <span />
+        <span />
+        <div class="total-price-container">
+          <p class="total-price">
+            Total articles : {$cart.reduce(
+              (acc, items) => acc + items.quantity,
+              0
+            )}
+          </p>
+          <p class="total-price">
+            Prix total : {Math.round(
+              $cart.reduce(
+                (acc, items) => acc + items.price * items.quantity,
+                0
+              ) * 100
+            ) / 100}{" "}
+            €
+          </p>
+        </div>
+        <button on:click={validateCart}>Valider le panier</button>
+      </div>
     </div>
   </div>
 </div>
