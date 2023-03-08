@@ -1,5 +1,5 @@
 <script>
-  import { cart } from "../store.js";
+  import { cart, removeItem } from "../store.js";
 
   const toggleCart = () => {
     const cartContainer = document.querySelector(".cart-container");
@@ -11,16 +11,6 @@
     const cartContainer = document.querySelector(".cart-container");
     // @ts-ignore
     cartContainer.style.transform = "translateX(400px)";
-  };
-
-  const removeFromCart = (id) => {
-    cart.update((items) => {
-      const itemIndex = items.findIndex((item) => item.id === id);
-      if (itemIndex !== -1) {
-        items.splice(itemIndex, 1);
-      }
-      return items;
-    });
   };
 
   const incrementQuantity = (id) => {
@@ -75,7 +65,7 @@
     <img
       on:click={closeCart}
       class="close-icon"
-      src="../public/images/close.png"
+      src="../images/close.png"
       alt="fermer"
     />
     <h2>Panier</h2>
@@ -103,9 +93,8 @@
                 <p>Prix unitaire : <em>&nbsp;{item.price}</em> €</p>
                 <p>Quantity :<em>&nbsp;{item.quantity}</em></p>
                 <p>Total : <em>&nbsp;{item.price * item.quantity} €</em></p>
-                <button
-                  id="button-remove"
-                  on:click={() => removeFromCart(item.id)}>Supprimer</button
+                <button id="button-remove" on:click={() => removeItem(item.id)}
+                  >Supprimer</button
                 >
               </div>
             </li>

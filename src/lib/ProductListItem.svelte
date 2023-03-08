@@ -16,12 +16,7 @@
   };
 
   const addToCart = () => {
-    const item = {
-      id: product.id,
-      title: product.title,
-      price: product.price,
-      quantity: quantity,
-    };
+    const item = { ...product, quantity };
 
     addItem(item);
     quantity = 1;
