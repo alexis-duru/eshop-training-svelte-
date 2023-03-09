@@ -1,19 +1,10 @@
 <script>
   import { addItem } from "../store.js";
+  import QuantityControl from "./QuantityControl.svelte";
 
   export let product;
 
   let quantity = 1;
-
-  const increment = () => {
-    quantity += 1;
-  };
-
-  const decrement = () => {
-    if (quantity > 1) {
-      quantity -= 1;
-    }
-  };
 
   const addToCart = () => {
     const item = { ...product, quantity };
@@ -29,9 +20,7 @@
   <p class="price">{product.price} €</p>
   <p class="description">{product.description}</p>
   <div class="quantity-selector">
-    <button on:click={decrement}>-</button>
-    <input type="number" bind:value={quantity} min="0" />
-    <button on:click={increment}>+</button>
+    <QuantityControl bind:quantity />
   </div>
   <button on:click={addToCart}>Add to cart</button>
   <h4>
