@@ -16,14 +16,14 @@
 
   const validateCart = () => {
     if ($cart.length === 0) {
-      window.alert("Votre panier est vide");
+      window.alert("Your basket is empty");
       return;
     }
     const total = $cart.reduce(
       (acc, item) => acc + item.price * item.quantity,
       0
     );
-    window.alert(`Le paiement de ${total} € a été validé`);
+    window.alert(`Payment of ${total} € has been validated`);
     cart.set([]);
     setTimeout(() => {
       window.location.reload();
@@ -90,7 +90,7 @@
             )}
           </p>
           <p class="total-price">
-            Prix total : {Math.round(
+            Total price : {Math.round(
               $cart.reduce(
                 (acc, items) => acc + items.price * items.quantity,
                 0
@@ -102,7 +102,7 @@
         {#if $cart.length === 0}
           <div class="empty-basket" />
         {:else}
-          <button on:click={validateCart}>Valider le panier</button>
+          <button on:click={validateCart}>Validate my order</button>
         {/if}
       </div>
     </div>
