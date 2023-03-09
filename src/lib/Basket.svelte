@@ -1,5 +1,6 @@
 <script>
   import { cart, removeItem } from "../store.js";
+  import QuantityControl from "./QuantityControl.svelte";
 
   const toggleCart = () => {
     const cartContainer = document.querySelector(".cart-container");
@@ -13,26 +14,6 @@
     cartContainer.style.transform = "translateX(400px)";
   };
 
-  const incrementQuantity = (id) => {
-    cart.update((items) => {
-      const itemIndex = items.findIndex((item) => item.id === id);
-      if (itemIndex !== -1) {
-        items[itemIndex].quantity++;
-      }
-      return items;
-    });
-  };
-
-  const decrementQuantity = (id) => {
-    cart.update((items) => {
-      const itemIndex = items.findIndex((item) => item.id === id);
-      if (itemIndex !== -1 && items[itemIndex].quantity > 1) {
-        items[itemIndex].quantity--;
-      }
-      return items;
-    });
-  };
-
   const validateCart = () => {
     if ($cart.length === 0) {
       window.alert("Votre panier est vide");
@@ -44,6 +25,9 @@
     );
     window.alert(`Le paiement de ${total} € a été validé`);
     cart.set([]);
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   };
 
   $: totalQuantity = $cart.reduce((acc, item) => acc + item.quantity, 0);
@@ -68,10 +52,10 @@
       src="../images/close.png"
       alt="fermer"
     />
-    <h2>Panier</h2>
+    <h2>Basket</h2>
     <div class="cart-wrapper">
       {#if $cart.length === 0}
-        <p>Votre panier est vide</p>
+        <p>Your basket is empty</p>
       {:else}
         <ul>
           {#each $cart as item, index}
@@ -79,22 +63,16 @@
               <span />
               <p>{item.title}</p>
               <div class="quantity-control">
-                <button
-                  class="control-left"
-                  on:click={() => decrementQuantity(item.id)}>-</button
-                >
-                <input type="number" min="1" value={item.quantity} />
-                <button
-                  class="control-right"
-                  on:click={() => incrementQuantity(item.id)}>+</button
-                >
+                <QuantityControl bind:quantity={item.quantity} />
               </div>
               <div class="item-shopping-cart-container">
-                <p>Prix unitaire : <em>&nbsp;{item.price}</em> €</p>
+                <p>Price : <em>&nbsp;{item.price}</em> €</p>
                 <p>Quantity :<em>&nbsp;{item.quantity}</em></p>
-                <p>Total : <em>&nbsp;{item.price * item.quantity} €</em></p>
+                <p class="total-price">
+                  Total : {Math.round(item.price * item.quantity * 100) / 100} €
+                </p>
                 <button id="button-remove" on:click={() => removeItem(item.id)}
-                  >Supprimer</button
+                  >Delete</button
                 >
               </div>
             </li>
@@ -126,7 +104,6 @@
         {:else}
           <button on:click={validateCart}>Valider le panier</button>
         {/if}
-        <!-- <button on:click={validateCart}>Valider le panier</button> -->
       </div>
     </div>
   </div>
