@@ -122,9 +122,7 @@
           </p>
         </div>
         {#if $cart.length === 0}
-          <div class="empty-basket">
-            Ajouter un premier article pour valider le panier
-          </div>
+          <div class="empty-basket" />
         {:else}
           <button on:click={validateCart}>Valider le panier</button>
         {/if}
